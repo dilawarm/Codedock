@@ -1,3 +1,1 @@
-fn main() {
-   print!("hei");
-}
+j

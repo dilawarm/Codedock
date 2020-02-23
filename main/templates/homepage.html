@@ -1,17 +1,61 @@
-<!DOCTYPE html>
-<html>
+{% load materializecss %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Run your code!</title>
+
+    {% block css %}
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/css/materialize.min.css" integrity="sha256-qj3p6P1fJIV+Ndv7RW1ovZI2UhOuboj9GcODzcNFIN8=" crossorigin="anonymous" />
+    {% endblock css %}
+
+    {% load static %}
+      <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+      <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+
+	<title>:)</title>
 </head>
+
+{% block content %}
 <body>
+  {% block javascript %}
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js" integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script>
+
+  <script>
+  $(document).ready(function(){
+
+    // Initialize materialize data picker
+    $('.datepicker').datepicker({'format': 'yyyy-mm-dd'});
+    $('select').formSelect();
+
+  });
+  </script>
+  {% endblock javascript %}
+
+  <div class="container">
+    <h1 class="teal-text center">
+      <i class="material-icons">attach_money</i>
+      <i class="material-icons">attach_money</i>
+      <i class="material-icons">attach_money</i>
+      Code Away
+      <i class="material-icons">attach_money</i>
+      <i class="material-icons">attach_money</i>
+      <i class="material-icons">attach_money</i>
+    </h1>
     <form method="post">
         {% csrf_token %}
-        {{ form }}
-        <button type="submit">Compile and Run</button>
-    </form>
-
-    <p>{{output}}</p>
+        {{ form | materializecss  }}
+        <button class="btn waves-effect waves-light" type="submit" name="action">Compile And Run
+            <i class="material-icons right">directions_run</i>
+</button>
+</form>
+    <h2 class="teal-text">Output:</h2>
+    <p>{{output|safe}}</p>
+</div>
 </body>
-</html>
+{% endblock %}

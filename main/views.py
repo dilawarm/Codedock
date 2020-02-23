@@ -34,11 +34,15 @@ def homepage(request):
             f.write(code)
             f.close()
 
-            process = subprocess.run(f"cd main/docker/{folder} && docker build -t test . && docker run test", shell=True, check=True, stdout=subprocess.PIPE, universal_newlines=True)
-            output = process.stdout
-            remove = ":latest"
-            print(output)
-            output = output[output.index(remove) + len(remove):]
+            try:
+                process = subprocess.run(f"cd main/docker/{folder} && docker build -t test . && docker run test", shell=True, check=True, stdout=subprocess.PIPE, universal_newlines=True)
+                output = process.stdout
+                remove = ":latest"
+                print(output)
+                output = "<h4>"+output[output.index(remove) + len(remove):] + "</h4>"
+            except:
+                output = '<h3 class="red-text">ERROR</h3>'
+
             return render(request, "homepage.html", {"form": form, "output": output})
 
     form = CodeForm()
